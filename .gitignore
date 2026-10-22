@@ -13,3 +13,4 @@ coverage/
 npm-debug.log*
 backend/cookies.txt
 backend/register_payload.json
+frontend/cookies.txt

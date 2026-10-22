@@ -190,7 +190,10 @@ ${jobDescription}`;
   return normalizeInterviewReport(rawReport);
 }
 async function generatePdfFromHtml(html) {
-  const browser = await puppeteer.launch({ headless: "shell" });
+  const browser = await puppeteer.launch({
+    headless: "shell",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
 
   try {
     const page = await browser.newPage();

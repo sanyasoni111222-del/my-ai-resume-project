@@ -40,7 +40,7 @@ async function registerUserController(req,res){
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
     });
 
     res.status(201).json({
@@ -83,7 +83,7 @@ async function registerUserController(req,res){
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
     });
     res.status(200).json({
         message: "User loggedIn succefully.",
