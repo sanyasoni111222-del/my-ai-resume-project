@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: "/",
-    withCredentials: true,
-});
+import api from "../../../lib/api.js";
 
 export const generateInterviewReport = async (jobDescription, selfDescription, resumeFile) => {
     const formData = new FormData();

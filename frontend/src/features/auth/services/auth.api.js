@@ -1,9 +1,4 @@
-import axios from "axios";
-
- const api = axios.create({
-    baseURL: "/",
-    withCredentials:true
-})
+import api, { setToken } from "../../../lib/api.js";
 
 
 export async function register({username,email,password}){
@@ -11,6 +6,7 @@ export async function register({username,email,password}){
         username, email, password
     })
 
+    if (response.data?.token) setToken(response.data.token)
     return response.data
 }
 
@@ -20,6 +16,7 @@ export async function login ({email,password}){
         email,password
     })
 
+    if (response.data?.token) setToken(response.data.token)
     return response.data
 }
 
@@ -33,6 +30,8 @@ export async function logout(){
     } catch (err) {
 
 
+    } finally {
+        setToken(null)
     }
 }
 export async function getMe(){
