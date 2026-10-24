@@ -2,13 +2,7 @@ const userModel = require("../models/user.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const tokenBlacklistModel = require("../models/blacklist.model")
-
-const authCookieOptions = {
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-}
+const authCookieOptions = require("../config/auth-cookie")
 /**
  * @name registerUserController
  * @description registr a new user, expects username,email address

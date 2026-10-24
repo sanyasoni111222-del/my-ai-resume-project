@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const tokenBlacklistModel = require("../models/blacklist.model");
+const authCookieOptions = require("../config/auth-cookie");
 
 async function authUser(req, res, next) {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -13,12 +14,7 @@ async function authUser(req, res, next) {
     try {
         const isTokenBlacklisted = await tokenBlacklistModel.findOne({ token: token });
         if (isTokenBlacklisted) {
-            res.clearCookie("token", {
-                httpOnly: true,
-                sameSite: "lax",
-                path: "/",
-                secure: false,
-            });
+            res.clearCookie("token", authCookieOptions);
             return res.status(401).json({
                 message: "Token is invalid"
             });
@@ -28,12 +24,7 @@ async function authUser(req, res, next) {
         req.user = decoded;
         return next();
     } catch (err) {
-        res.clearCookie("token", {
-            httpOnly: true,
-            sameSite: "lax",
-            path: "/",
-            secure: false,
-        });
+        res.clearCookie("token", authCookieOptions);
         return res.status(401).json({
             message: "Unauthorized or invalid token",
             error: err.message
